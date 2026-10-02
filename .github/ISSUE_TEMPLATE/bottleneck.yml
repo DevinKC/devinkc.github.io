@@ -1,0 +1,91 @@
+name: Submit a real bottleneck
+description: Put one concrete, public problem on the Cuthbert board.
+title: "[Bottleneck] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## One concrete thing that is stuck
+        This issue will be public. Make the problem specific enough that another human could plausibly move it.
+  - type: input
+    id: organization
+    attributes:
+      label: Organization / team
+      placeholder: Local NGO, research group, community health team
+  - type: input
+    id: geography
+    attributes:
+      label: Country / region
+      placeholder: Northern Ghana
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: What are you trying to accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: stuck
+    attributes:
+      label: What is stuck?
+    validations:
+      required: true
+  - type: dropdown
+    id: need_type
+    attributes:
+      label: What kind of missing piece?
+      options:
+        - Person / expertise
+        - Introduction / access
+        - Research / data
+        - Software / technical help
+        - Writing / grant support
+        - Translation / language
+        - Logistics / transport
+        - Equipment / supplies
+        - Visibility / communications
+        - Funding pathway
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: smallest_useful
+    attributes:
+      label: Smallest useful thing
+      description: What is the smallest realistic intervention that would materially unblock this?
+    validations:
+      required: true
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency
+      options:
+        - No hard deadline
+        - Useful within 30 days
+        - Useful within 14 days
+        - Useful within 7 days
+        - Time-critical — explain below
+    validations:
+      required: true
+  - type: input
+    id: cash
+    attributes:
+      label: Cash required
+      placeholder: $0 or USD 4,500
+  - type: input
+    id: volunteer
+    attributes:
+      label: Volunteer effort
+      placeholder: 6–10 hours
+  - type: textarea
+    id: context
+    attributes:
+      label: Public context / evidence
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public-information check
+      options:
+        - label: I have not included private medical, financial, identifying, security-sensitive, or confidential information.
+          required: true
