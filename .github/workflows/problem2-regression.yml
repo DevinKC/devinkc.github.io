@@ -1,0 +1,162 @@
+name: Problem 2 malaria.em regression test
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/problem2-regression.yml'
+
+jobs:
+  test-single-haplotype:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Cuthbert
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+
+      - name: Clone malaria.em
+        run: git clone --depth 1 https://github.com/PlasmoGenEpi/malaria.em.git upstream
+
+      - name: Apply candidate patch
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("upstream/R/malaria.em.R")
+          s = p.read_text()
+
+          old_design = """getDesignforOneGenotype.additive<-function(HaploSet, nhaplo){
+          	nset<-length(HaploSet)
+          	if (nset==0){
+          		xmat<-mat.or.vec(nset, nhaplo)
+          		xmat
+          	}
+          	else{
+          		xmat<-mat.or.vec(nset, nhaplo)
+          	
+          		nsize<-length(HaploSet[[1]])
+
+          		for (i in 1:nset){
+          			for(j in 1:nsize){
+          				hIndex<-HaploSet[[i]][j]
+          				xmat[i,hIndex]<-xmat[i,hIndex]+1
+          			}
+          		}
+          		xmat	
+          	}
+          }"""
+          new_design = """getDesignforOneGenotype.additive<-function(HaploSet, nhaplo){
+          	nset<-length(HaploSet)
+          	xmat<-matrix(0, nrow=nset, ncol=nhaplo)
+
+          	if (nset>0){
+          		nsize<-length(HaploSet[[1]])
+
+          		for (i in seq_len(nset)){
+          			for(j in seq_len(nsize)){
+          				hIndex<-HaploSet[[i]][j]
+          				xmat[i,hIndex]<-xmat[i,hIndex]+1
+          			}
+          		}
+          	}
+          	xmat
+          }"""
+
+          old_score = """getOneScore.haplotype.em<-function(w,i, xmat.additive, allEstiPs){
+          	nhaplo<-dim(xmat.additive)[2]
+          	si.haplotype<-rep(0, nhaplo-1)
+          	for (j in 1:nhaplo-1){
+          		si.haplotype[j]<-w[i]*(xmat.additive[i,j]/allEstiPs[j]-xmat.additive[i,nhaplo]/allEstiPs[nhaplo])
+          		}
+          	si.haplotype
+          }"""
+          new_score = """getOneScore.haplotype.em<-function(w,i, xmat.additive, allEstiPs){
+          	nhaplo<-dim(xmat.additive)[2]
+          	if (nhaplo<=1){
+          		return(numeric(0))
+          	}
+          	si.haplotype<-rep(0, nhaplo-1)
+          	for (j in seq_len(nhaplo-1)){
+          		si.haplotype[j]<-w[i]*(xmat.additive[i,j]/allEstiPs[j]-xmat.additive[i,nhaplo]/allEstiPs[nhaplo])
+          		}
+          	si.haplotype
+          }"""
+
+          old_std = """getStd.em<-function(allScore){
+          	nb<-dim(allScore)[1]
+          	invScore<-Ginv(allScore)$Ginv
+          	
+          	lambda.std<-sqrt(invScore[nb,nb])
+          	
+          	invScore.haplo<-as.matrix(invScore[-nb,-nb])
+
+          	haplo.std<-rep(0,nb)
+          	for(i in 1:(nb-1)){
+          		haplo.std[i]<-sqrt(invScore.haplo[i,i])
+          	}
+
+          	l<-rep(1,nb-1)
+          	haplo.std[nb]<-sqrt(t(l)%*%invScore.haplo%*%l)
+          	param.std<-c(haplo.std, lambda.std)
+          	param.std
+          }"""
+          new_std = """getStd.em<-function(allScore){
+          	nb<-dim(allScore)[1]
+          	invScore<-Ginv(allScore)$Ginv
+          	
+          	lambda.std<-sqrt(invScore[nb,nb])
+
+          	if (nb==1){
+          		return(c(0, lambda.std))
+          	}
+          	
+          	invScore.haplo<-as.matrix(invScore[-nb,-nb])
+
+          	haplo.std<-rep(0,nb)
+          	for(i in seq_len(nb-1)){
+          		haplo.std[i]<-sqrt(invScore.haplo[i,i])
+          	}
+
+          	l<-rep(1,nb-1)
+          	haplo.std[nb]<-sqrt(t(l)%*%invScore.haplo%*%l)
+          	param.std<-c(haplo.std, lambda.std)
+          	param.std
+          }"""
+
+          for old, new, name in [
+              (old_design, new_design, "design matrix"),
+              (old_score, new_score, "haplotype score"),
+              (old_std, new_std, "standard error"),
+          ]:
+              if old not in s:
+                  raise SystemExit(f"Could not find expected {name} block")
+              s = s.replace(old, new)
+
+          p.write_text(s)
+          PY
+
+      - name: Run upstream reproduction
+        run: |
+          Rscript - <<'RS'
+          source("upstream/R/malaria.em.R")
+
+          mat <- matrix(c("A", "A", "A",
+                          "C", "C", "C"),
+                        ncol = 2,
+                        dimnames = list(c("s1", "s2", "s3"),
+                                        c("locus1", "locus2")))
+
+          result <- malaria.em(mat, sizes = 1:2, locus.label = colnames(mat))
+
+          stopifnot(inherits(result, "malaria.em"))
+          stopifnot(length(result$haplo.prob) == 1)
+          stopifnot(isTRUE(all.equal(as.numeric(result$haplo.prob[1]), 1)))
+          stopifnot(length(result$haplo.prob.std) == 1)
+          stopifnot(isTRUE(all.equal(as.numeric(result$haplo.prob.std[1]), 0)))
+
+          cat("PASS: single-haplotype malaria.em regression case completes.\n")
+          print(result$haplo.prob.tab)
+          RS
