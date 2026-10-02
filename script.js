@@ -28,8 +28,13 @@
 
   const statusFor = issue => {
     const labels = normalizedLabels(issue);
-    if (labels.includes("solved") || labels.includes("outcome:solved")) return "solved";
-    if (labels.includes("matched") || labels.includes("outcome:matched")) return "matched";
+    const body = String(issue.body || "").toLowerCase();
+
+    if (labels.includes("solved") || labels.includes("outcome:solved") || /cuthbert status:\s*solved/.test(body)) return "solved";
+    if (labels.includes("awaiting-verification") || /cuthbert status:\s*awaiting verification/.test(body)) return "awaiting-verification";
+    if (labels.includes("solution-found") || /cuthbert status:\s*solution found/.test(body)) return "solution-found";
+    if (labels.includes("investigating") || /cuthbert status:\s*investigating/.test(body)) return "investigating";
+    if (labels.includes("matched") || labels.includes("outcome:matched") || /cuthbert status:\s*matched/.test(body)) return "matched";
     return issue.state === "open" ? "open" : "closed";
   };
 
@@ -73,11 +78,14 @@
     const allProblems = realIssues.filter(isProblem);
     const statuses = allProblems.map(statusFor);
     const matched = statuses.filter(s => s === "matched").length;
+    const investigating = statuses.filter(s => ["investigating", "solution-found"].includes(s)).length;
+    const awaiting = statuses.filter(s => s === "awaiting-verification").length;
     const solved = statuses.filter(s => s === "solved").length;
     const open = statuses.filter(s => s === "open").length;
 
     setCount("#stat-open", open);
-    setCount("#stat-matched", matched);
+    setCount("#stat-investigating", investigating);
+    setCount("#stat-awaiting", awaiting);
     setCount("#stat-solved", solved);
     setCount("#stat-resources", resources.length);
     setCount("#score-connections", matched + solved);
