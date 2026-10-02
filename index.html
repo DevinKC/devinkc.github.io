@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Cuthbert finds concrete bottlenecks and connects them with people, skills, access, and resources that can unblock them. Malaria is the first proving ground." />
+  <meta name="theme-color" content="#f6f0e6" />
+  <meta property="og:title" content="Cuthbert — Move what matters" />
+  <meta property="og:description" content="Open problems. Useful humans. Specific connections. Zero bullshit." />
+  <meta property="og:type" content="website" />
+  <title>Cuthbert — Open Problems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Cuthbert home"><span class="mark">C</span><span>Cuthbert</span></a>
+    <nav><a href="#problems">Open problems</a><a href="#how">How it works</a><a href="#malaria">First mission</a><a href="#network">Join</a></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <p class="eyebrow">A connective layer for useful humans</p>
+      <h1>Find the missing piece.<br><em>Move it.</em></h1>
+      <p class="hero-copy">Cuthbert turns vague, giant problems into specific bottlenecks — then goes looking for the person, skill, introduction, tool, data, access, logistics, attention, or money that can actually unblock them.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#problems">See open problems</a>
+        <a class="button secondary" href="https://github.com/DevinKC/devinkc.github.io/issues/new?template=bottleneck.yml" target="_blank" rel="noopener">Submit a bottleneck</a>
+      </div>
+      <div class="signal-row"><span>Find friction</span><span>Find leverage</span><span>Connect humans</span><span>Show the result</span></div>
+    </section>
+
+    <section class="manifesto-wrap"><div class="shell manifesto">
+      <p class="kicker">The premise</p>
+      <blockquote>The world is full of people who need something and people who have exactly that thing. They keep missing each other.</blockquote>
+      <p>Cuthbert exists to shorten that distance. We are not starting with money. We are starting with attention, persistence, research, introductions, volunteer capability, and a refusal to let “somebody should do something” be the end of the sentence.</p>
+    </div></section>
+
+    <section id="problems" class="problems-section"><div class="shell section">
+      <div class="problem-heading-grid">
+        <div class="section-heading narrow"><p class="kicker">The missing pieces</p><h2>Open problems.</h2><p>Public, concrete bottlenecks submitted to Cuthbert. No invented needs. Every item should point toward something a real human can move.</p></div>
+        <aside class="board-rule"><span>THE RULE</span><strong>If we cannot describe the missing piece, we do not understand the problem yet.</strong></aside>
+      </div>
+
+      <div class="board-stats">
+        <div><strong id="stat-open">0</strong><span>open problems</span></div>
+        <div><strong id="stat-matched">0</strong><span>matched</span></div>
+        <div><strong id="stat-solved">0</strong><span>verified solved</span></div>
+        <div><strong id="stat-resources">0</strong><span>useful offers</span></div>
+      </div>
+
+      <div class="board-toolbar">
+        <label class="search-box"><span class="sr-only">Search problems</span><input id="problem-search" type="search" placeholder="Search problems, countries, skills…" /></label>
+        <label><span class="sr-only">Need type</span><select id="type-filter"><option value="all">All need types</option></select></label>
+        <label><span class="sr-only">Status</span><select id="status-filter"><option value="all">All statuses</option><option value="open">Open</option><option value="matched">Matched</option><option value="solved">Solved</option></select></label>
+        <button class="button reset-button" id="reset-filters" type="button">Reset</button>
+      </div>
+      <div id="board-message" class="board-message" role="status">Loading the public problem board…</div>
+      <div id="problem-grid" class="problem-grid"></div>
+      <div class="board-actions">
+        <a class="button primary" href="https://github.com/DevinKC/devinkc.github.io/issues/new?template=bottleneck.yml" target="_blank" rel="noopener">Put a problem on the board</a>
+        <a class="button secondary" href="https://github.com/DevinKC/devinkc.github.io/issues/new?template=resource.yml" target="_blank" rel="noopener">Offer a missing piece</a>
+      </div>
+      <p class="privacy-note">The public board is deliberately public. Do not submit private, medical, financial, identifying, or confidential information.</p>
+    </div></section>
+
+    <section id="how" class="shell section">
+      <div class="section-heading"><p class="kicker">How Cuthbert works</p><h2>Small machine. Big leverage.</h2></div>
+      <div class="steps">
+        <article><span class="number">01</span><h3>Find the bottleneck</h3><p>Not “solve malaria.” Find the specific thing slowing down a person or team already doing the work.</p></article>
+        <article><span class="number">02</span><h3>Name the missing piece</h3><p>A person. Data. Translation. Distribution. Legal help. Introductions. Equipment. Visibility. Money — if money is truly the constraint.</p></article>
+        <article><span class="number">03</span><h3>Find the nearest useful human</h3><p>Search outward through operators, researchers, funders, companies, communities, and people with oddly specific superpowers.</p></article>
+        <article><span class="number">04</span><h3>Close the loop</h3><p>Make the connection, verify whether it helped, document the result, and leave the trail cleaner for the next problem.</p></article>
+      </div>
+    </section>
+
+    <section id="malaria" class="mission-section"><div class="shell mission-grid">
+      <div><p class="kicker">First proving ground</p><h2>Malaria.</h2><p class="mission-lead">Brilliant people, serious institutions, huge existing infrastructure — and still plenty of small missing pieces between them.</p><p>Cuthbert's job is not to cosplay as a malaria institution. It is to support people already fighting the disease: identify practical friction around their work and recruit the missing piece.</p></div>
+      <aside class="mission-card"><p class="card-label">Operating rule</p><p class="big-quote">Do not build a new machine when the missing part can be carried to one that already works.</p></aside>
+    </div></section>
+
+    <section class="shell section">
+      <div class="section-heading narrow"><p class="kicker">What we are / what we are not</p><h2>Useful before impressive.</h2></div>
+      <div class="split-cards">
+        <article class="yes-card"><h3>Cuthbert is</h3><ul><li>A connector between specific needs and specific capability.</li><li>A research and coordination layer.</li><li>A place to surface neglected operational friction.</li><li>A public record of what was tried and what actually moved.</li></ul></article>
+        <article class="no-card"><h3>Cuthbert is not</h3><ul><li>A grantmaker pretending to have money it does not have.</li><li>A replacement for domain experts.</li><li>A savior brand looking for credit.</li><li>A giant plan that must be perfect before anyone moves.</li></ul></article>
+      </div>
+    </section>
+
+    <section id="network" class="network-section"><div class="shell">
+      <div class="section-heading center"><p class="kicker">Join the network</p><h2>Need something? Have something?</h2><p>Give Cuthbert one concrete thing to move.</p></div>
+      <div class="network-grid">
+        <article class="action-card"><div class="icon">→</div><h3>I have a bottleneck</h3><p>Tell us the goal, what is stuck, where it is happening, and the smallest thing that would materially change the situation.</p><a class="button primary full" href="https://github.com/DevinKC/devinkc.github.io/issues/new?template=bottleneck.yml" target="_blank" rel="noopener">Describe the bottleneck</a></article>
+        <article class="action-card"><div class="icon">+</div><h3>I have something useful</h3><p>Offer a skill, introduction, tool, dataset, audience, access point, logistics capability, equipment, or funding pathway.</p><a class="button secondary full" href="https://github.com/DevinKC/devinkc.github.io/issues/new?template=resource.yml" target="_blank" rel="noopener">Offer a resource</a></article>
+      </div>
+      <p class="privacy-note">Version 0.3 uses public GitHub Issue Forms so the whole system can run at $0. Sensitive or confidential cases need a private intake channel later.</p>
+    </div></section>
+
+    <section class="shell section results-section">
+      <div class="section-heading narrow"><p class="kicker">Proof over promises</p><h2>The scoreboard starts at zero.</h2><p>When something actually gets solved, the number changes. Until then, zero is better than bullshit.</p></div>
+      <div class="scoreboard"><div><strong id="score-connections">0</strong><span>public matches</span></div><div><strong id="score-solved">0</strong><span>verified problems solved</span></div><div><strong>$0</strong><span>claimed Cuthbert budget</span></div></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="shell footer-inner"><div><div class="brand footer-brand"><span class="mark">C</span><span>Cuthbert</span></div><p>Start useful. Stay honest. Keep moving.</p></div><a href="#top">Back to top ↑</a></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>
