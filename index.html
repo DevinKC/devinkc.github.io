@@ -45,8 +45,9 @@
       </div>
 
       <div class="board-stats">
-        <div><strong id="stat-open">0</strong><span>open problems</span></div>
-        <div><strong id="stat-matched">0</strong><span>matched</span></div>
+        <div><strong id="stat-open">0</strong><span>open</span></div>
+        <div><strong id="stat-investigating">0</strong><span>investigating / solution found</span></div>
+        <div><strong id="stat-awaiting">0</strong><span>awaiting verification</span></div>
         <div><strong id="stat-solved">0</strong><span>verified solved</span></div>
         <div><strong id="stat-resources">0</strong><span>useful offers</span></div>
       </div>
@@ -54,7 +55,7 @@
       <div class="board-toolbar">
         <label class="search-box"><span class="sr-only">Search problems</span><input id="problem-search" type="search" placeholder="Search problems, countries, skills…" /></label>
         <label><span class="sr-only">Need type</span><select id="type-filter"><option value="all">All need types</option></select></label>
-        <label><span class="sr-only">Status</span><select id="status-filter"><option value="all">All statuses</option><option value="open">Open</option><option value="matched">Matched</option><option value="solved">Solved</option></select></label>
+        <label><span class="sr-only">Status</span><select id="status-filter"><option value="all">All statuses</option><option value="open">Open</option><option value="investigating">Investigating</option><option value="solution-found">Solution found</option><option value="awaiting-verification">Awaiting verification</option><option value="matched">Matched</option><option value="solved">Solved</option></select></label>
         <button class="button reset-button" id="reset-filters" type="button">Reset</button>
       </div>
       <div id="board-message" class="board-message" role="status">Loading the public problem board…</div>
